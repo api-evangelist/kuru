@@ -1,0 +1,59 @@
+generated: '2026-07-19'
+method: searched
+source: openapi/kuru-flow-openapi.json + https://docs.kuru.io/api-reference/generate-jwt-token
+docs: https://docs.kuru.io/kuru-flow/flow-overview
+api: Kuru Flow API
+host: https://ws.kuru.io
+summary: >-
+  The Kuru Flow API accepts either a short-lived JWT bearer token minted from a
+  user's Ethereum address, or a provisioned API key sent in the X-API-Key
+  header. The token-minting endpoint itself is unauthenticated. There is no
+  OAuth 2.0 or OpenID Connect surface, so no scopes artifact applies.
+schemes:
+  - id: BearerAuth
+    type: http
+    scheme: bearer
+    bearer_format: JWT
+    location: header
+    header: Authorization
+    value_prefix: 'Bearer '
+    description: JWT token obtained from the /api/generate-token endpoint.
+    minted_by: generateToken
+    mint_endpoint: POST https://ws.kuru.io/api/generate-token
+    mint_input: user_address (Ethereum address, ^0x[a-fA-F0-9]{40}$)
+    expires: true
+    expiry_field: expires_at
+    expiry_format: unix-timestamp
+    rate_limit:
+      rps: 1
+      burst: 1
+    applied_to:
+      - calculateBestPath
+  - id: ApiKeyAuth
+    type: apiKey
+    location: header
+    header: X-API-Key
+    description: API key for authentication.
+    applied_to:
+      - calculateBestPath
+unauthenticated_operations:
+  - operationId: generateToken
+    path: /api/generate-token
+    method: post
+    note: Token minting is open; the returned JWT is what carries the rate limit.
+oauth2: false
+openid_connect: false
+mutual_tls: false
+scopes: none
+failure_modes:
+  - status: 401
+    error: unauthorized
+    meaning: Invalid or missing authentication on /api/quote.
+  - status: 429
+    error: too_many_requests
+    meaning: JWT rate limit (1 RPS) exceeded.
+wallet_auth:
+  note: >-
+    End-user product authentication is wallet-based via an embedded Privy
+    wallet; this is a product surface, not an API credential.
+  docs: https://docs.kuru.io/product/wallet
