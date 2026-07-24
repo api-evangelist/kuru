@@ -1,0 +1,127 @@
+openapi: 3.0.3
+info:
+  title: Kuru WebSocket Generate Token API
+  description: API for Kuru WebSocket services including JWT token generation and swap quote calculations
+  version: 1.0.0
+servers:
+- url: https://ws.kuru.io
+  description: Main server
+tags:
+- name: Generate Token
+paths:
+  /api/generate-token:
+    post:
+      summary: Generate JWT Token
+      description: Generates a JWT token with 1 RPS rate limiting for a given user address
+      operationId: generateToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenGenerationRequest'
+            example:
+              user_address: '0x1234567890abcdef1234567890abcdef12345678'
+      responses:
+        '200':
+          description: Successfully generated JWT token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenGenerationResponse'
+              example:
+                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                expires_at: 1700000000
+                rate_limit:
+                  rps: 1
+                  burst: 1
+        '400':
+          description: Bad Request - Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                invalid_json:
+                  value:
+                    error: invalid_json
+                missing_address:
+                  value:
+                    error: user_address_required
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: method_not_allowed
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: token_generation_failed
+      tags:
+      - Generate Token
+components:
+  schemas:
+    TokenGenerationResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: JWT token string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        expires_at:
+          type: integer
+          format: int64
+          description: Token expiration timestamp (Unix timestamp)
+          example: 1700000000
+        rate_limit:
+          type: object
+          properties:
+            rps:
+              type: integer
+              description: Requests per second allowed
+              example: 1
+            burst:
+              type: integer
+              description: Burst capacity for rate limiting
+              example: 1
+    ErrorResponse:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Error code or type
+          example: invalid_json
+        message:
+          type: string
+          description: Human-readable error message
+          example: Invalid JSON format in request body
+    TokenGenerationRequest:
+      type: object
+      required:
+      - user_address
+      properties:
+        user_address:
+          type: string
+          description: Ethereum address of the user
+          pattern: ^0x[a-fA-F0-9]{40}$
+          example: '0x1234567890abcdef1234567890abcdef12345678'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token obtained from /api/generate-token endpoint
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for authentication
