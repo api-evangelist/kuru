@@ -1,0 +1,82 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/kuru-flow-openapi.json
+api: Kuru Flow API
+format: custom-json
+rfc9457: false
+notes: >-
+  Kuru does not use RFC 9457 application/problem+json. It returns a flat JSON
+  error envelope with a machine-readable `error` code and an optional
+  human-readable `message`, served as application/json. Every code below was
+  derived from a documented response example in the published OpenAPI — none
+  are inferred or invented.
+envelope:
+  media_type: application/json
+  schema: '#/components/schemas/ErrorResponse'
+  fields:
+    - name: error
+      required: true
+      type: string
+      description: Error code or type.
+    - name: message
+      required: false
+      type: string
+      description: Human-readable error message.
+  example:
+    error: invalid_json
+    message: Invalid JSON format in request body
+problem_types:
+  - code: invalid_json
+    status: 400
+    title: Malformed JSON request body
+    operations: [generateToken, calculateBestPath]
+    remediation: Send a well-formed JSON body with Content-Type application/json.
+  - code: user_address_required
+    status: 400
+    title: Missing user_address
+    operations: [generateToken]
+    remediation: Include user_address matching ^0x[a-fA-F0-9]{40}$.
+  - code: missing_required_fields
+    status: 400
+    title: Missing required quote fields
+    operations: [calculateBestPath]
+    remediation: >-
+      Supply userAddress, tokenIn, tokenOut and amount. Also supply exactly one
+      of autoSlippage:true or slippageTolerance (the schema oneOf forbids both).
+  - code: unauthorized
+    status: 401
+    title: Invalid or missing authentication
+    operations: [calculateBestPath]
+    remediation: >-
+      Send a valid Authorization: Bearer <JWT> from /api/generate-token, or a
+      valid X-API-Key header.
+  - code: method_not_allowed
+    status: 405
+    title: Method not allowed
+    operations: [generateToken, calculateBestPath]
+    remediation: Both endpoints accept POST only.
+  - code: too_many_requests
+    status: 429
+    title: Rate limit exceeded
+    operations: [calculateBestPath]
+    remediation: >-
+      The minted JWT is limited to 1 request per second with a burst of 1.
+      Throttle client-side and retry with backoff.
+  - code: token_generation_failed
+    status: 500
+    title: Token generation failed
+    operations: [generateToken]
+    remediation: Retry; if persistent, check https://status.kuru.io.
+  - code: calculation_failed
+    status: 500
+    title: Swap path calculation failed
+    operations: [calculateBestPath]
+    message: Failed to calculate swap path
+    remediation: >-
+      Verify both token addresses are routable on Monad and the amount is a
+      valid base-unit string. Retry; if persistent, check https://status.kuru.io.
+  - code: service_unavailable
+    status: 503
+    title: Service unavailable
+    operations: [calculateBestPath]
+    remediation: Routing engine temporarily unavailable; retry with backoff.

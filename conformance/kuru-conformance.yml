@@ -1,0 +1,95 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.kuru.io/contracts/Audits + openapi/kuru-flow-openapi.json
+api: Kuru Flow API / Kuru protocol
+summary: >-
+  Kuru is a DeFi protocol, not a regulated data processor, so the usual
+  enterprise certification set (SOC 2, ISO 27001, PCI DSS) does not apply and is
+  not claimed. Its published assurance programme is third-party smart-contract
+  security auditing by Spearbit and Cantina, including post-fix review reports.
+  Cross-cutting HTTP standards conformance is derived from the published
+  OpenAPI.
+standards:
+  - id: openapi
+    conforms: true
+    version: '3.0.3'
+    evidence: >-
+      Kuru publishes a machine-readable OpenAPI 3.0.3 description at
+      https://docs.kuru.io/kuru-flow/openapi.json covering both Flow endpoints.
+  - id: oauth2
+    conforms: false
+    evidence: No OAuth 2.0 flows are declared or documented; auth is JWT bearer + API key.
+  - id: oidc
+    conforms: false
+    evidence: No OpenID Connect discovery document; /.well-known/openid-configuration returns 404/400.
+  - id: jwt
+    conforms: true
+    evidence: >-
+      POST /api/generate-token mints an RFC 7519 JWT presented as an RFC 6750
+      Authorization: Bearer credential, with an expires_at claim surfaced in the
+      response body.
+  - id: rfc9457
+    conforms: false
+    evidence: >-
+      Errors use a flat application/json envelope { error, message }, not
+      application/problem+json. See errors/kuru-problem-types.yml.
+  - id: pagination
+    conforms: false
+    not_applicable: true
+    evidence: No collection endpoints exist, so no pagination convention applies.
+  - id: idempotency
+    conforms: false
+    evidence: >-
+      No idempotency key mechanism is documented on the HTTP API. Settlement
+      idempotency is provided by Monad transaction nonces.
+  - id: rate_limit_signalling
+    conforms: partial
+    evidence: >-
+      A concrete limit (1 RPS, burst 1) is published in the token-mint response
+      body and 429 is returned on breach, but no RateLimit-* or Retry-After
+      response headers are documented.
+  - id: erc20
+    conforms: true
+    evidence: >-
+      Trading operates over ERC-20 tokens on Monad with standard approval
+      semantics (the SDK and agent skill emit an approval transaction ahead of a
+      swap when allowance is insufficient).
+  - id: evm
+    conforms: true
+    evidence: >-
+      All addresses conform to the EVM 20-byte address format, enforced in the
+      OpenAPI via pattern ^0x[a-fA-F0-9]{40}$.
+security_audits:
+  published: true
+  url: https://docs.kuru.io/contracts/Audits
+  claim: All core Kuru contracts are fully audited.
+  reports:
+    - auditor: Spearbit
+      scope: Core contracts
+      report: https://drive.google.com/file/d/1EK8IILnrXOSSKHHp0KcDBNQ2wDcbWp2I/view
+    - auditor: Spearbit
+      scope: Post-fix review
+      report: https://drive.google.com/file/d/17GSLB-SbYV9mzCgRrrPGp-MsBDkYyNaL/view
+    - auditor: Cantina
+      scope: Core contracts
+      report: https://drive.google.com/file/d/14d_plGmdyRAWZDZjpv5Yvr6ofyjAQIxZ/view
+    - auditor: Cantina
+      scope: Post-fix review
+      report: https://drive.google.com/file/d/1ldynKBsQiQDvPn484t40vJ7JfMgBW7Yr/view
+    - auditor: Cantina
+      scope: Kuru Flow
+      report: https://drive.google.com/file/d/1V8FdjJJ1qH4fTANrodJZ_iE4rgOqGZkf/view
+  open_source_contracts:
+    - https://github.com/Kuru-Labs/Kuru-contracts-dex-public
+    - https://github.com/Kuru-Labs/Kuru-contracts-flow-public
+    - https://github.com/Kuru-Labs/Kuru-contracts-active-vault-public
+certifications:
+  soc2: not claimed
+  iso27001: not claimed
+  pci_dss: not applicable
+  hipaa: not applicable
+  fedramp: not applicable
+  note: >-
+    Absence recorded honestly — Kuru publishes no enterprise compliance
+    certifications. The audit programme above is its published assurance
+    evidence.

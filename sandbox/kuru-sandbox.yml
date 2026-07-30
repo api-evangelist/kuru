@@ -1,0 +1,74 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.kuru.io/contracts/Contract-addresses + https://docs.kuru.io/sdk/quickstart-sdk
+api: Kuru Flow API / Kuru protocol
+summary: >-
+  Kuru's test surface is a Monad testnet deployment with its own published
+  contract addresses, token and market. There is no hosted HTTP sandbox for the
+  Kuru Flow API and no test API key programme — integrators point the SDK at a
+  Monad testnet RPC and the testnet contract set. All values below are
+  transcribed verbatim from Kuru's published address tables.
+hosted_http_sandbox:
+  present: false
+  note: >-
+    ws.kuru.io has no documented sandbox host. Quote calls are read-only, so
+    testing is typically done against mainnet routing with unsigned
+    (prepare-mode) transactions rather than a mock server.
+environments:
+  - name: testnet
+    chain: Monad testnet
+    contracts:
+      Router: '0x7EFbE105Ca7415dE98F96622173458ac1c054630'
+      MarginAccount: '0xd029C2D98ff85D8F64799017fE00a59B1159CE02'
+      KuruForwarder: '0x681bB1508E14433b148a2549ba2726454aDc9BB4'
+      KuruDeployer: '0xDacd06372cEb638640c9D8466A023b7362324e1A'
+      KuruUtils: '0xE0841E0F06c5770C1D4930EC6C507ee33199C88C'
+    tokens:
+      USDC: '0x3bA3d39AFcf8bb994f7964B3e0171Ea2Ba361570'
+    markets:
+      MON-USDC: '0xa241896A7Dbe8a550D2E5fF7A914bB1989ceD2D9'
+  - name: mainnet
+    chain: Monad
+    contracts:
+      KuruFlowEntrypoint: '0xb3e6778480b2E488385E8205eA05E20060B813cb'
+      KuruFlowRouter: '0x0d3a1BE29E9dEd63c7a5678b31e847D68F71FFa2'
+      KuruForwarder: '0x974E61BBa9C4704E8Bcc1923fdC3527B41323FAA'
+      MarginAccount: '0x2A68ba1833cDf93fa9Da1EEbd7F46242aD8E90c5'
+      MonadDeployer: '0xe29309e308af3EE3B1a414E97c37A58509f27D1E'
+      Router: '0xd651346d7c789536ebf06dc72aE3C8502cd695CC'
+    tokens:
+      WMON: '0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A'
+      AUSD: '0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a'
+      USDC: '0x754704Bc059F8C67012fEd69BC8A327a5aafb603'
+    markets:
+      MON-AUSD: '0x131a2e70a5b31a517a74b8c567149bc294470da9'
+      MON-USDC: '0x065C9d28E428A0db40191a54d33d5b7c71a9C394'
+testnet_sdk_config:
+  source: https://docs.kuru.io/sdk/quickstart-sdk
+  note: The quickstart ships a testnet config.json with these values.
+  config:
+    rpcUrl: monad_rpc_url
+    marginAccountAddress: '0xdDDaBd30785bA8b45e434a1f134BDf304d6125d9'
+    routerAddress: '0x1f5A250c4A506DA4cE584173c6ed1890B1bf7187'
+  caveat: >-
+    These two quickstart testnet addresses differ from the testnet table on the
+    Contract Addresses page. Both are recorded as published; integrators should
+    treat the Contract Addresses page as authoritative.
+dry_run:
+  supported: true
+  mechanism: prepare-mode
+  note: >-
+    Kuru's own agent skill exposes `prepare buy` / `prepare sell`, which return
+    ordered UNSIGNED transaction requests (approval first when allowance is
+    short, then the swap). This is the safest way to exercise the full flow
+    without broadcasting.
+  source: https://github.com/Kuru-Labs/kuru-trading-skills
+  quote_only: >-
+    POST /api/quote is read-only and can be called freely to exercise routing
+    without any on-chain effect.
+credentials:
+  test_api_keys: none published
+  required_env:
+    - MONAD_RPC_URL
+    - KURU_PRIVATE_KEY (live broadcast only; not needed for prepare mode)
+    - KURU_WALLET_ADDRESS (prepare mode alternative to a private key)

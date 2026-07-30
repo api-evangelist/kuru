@@ -1,0 +1,94 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/Kuru-Labs/kuru-trading-skills
+summary: >-
+  Kuru Labs ships a first-party command-line trading tool in the
+  kuru-trading-skills repository. It is distributed as a repo you clone and run
+  with Bun (and is simultaneously packaged as an agent skill) rather than as a
+  published binary or npm bin, so there is no registry install line.
+name: kuru-trade
+official: true
+repository: https://github.com/Kuru-Labs/kuru-trading-skills
+entrypoint: scripts/kuru-trade.ts
+runtime: bun
+distribution: source
+install:
+  - method: git
+    steps:
+      - git clone https://github.com/Kuru-Labs/kuru-trading-skills
+      - bun install
+    note: >-
+      Requires Bun and a Monad RPC URL. No published npm bin or Homebrew formula
+      was found.
+environment:
+  required:
+    - name: MONAD_RPC_URL
+      description: Monad RPC endpoint.
+    - name: KURU_PRIVATE_KEY
+      description: Signing key; required for live buy/sell/quote/balance.
+  optional:
+    - name: KURU_WALLET_ADDRESS
+      description: Wallet address for prepare mode when no private key is present.
+    - name: KURU_SLIPPAGE_BPS
+      description: Slippage tolerance in basis points (e.g. 50).
+    - name: KURU_AUTO_SLIPPAGE
+      description: Enable automatic slippage calculation.
+    - name: KURU_REFERRER_ADDRESS
+      description: Referrer address for integrator fee sharing.
+    - name: KURU_REFERRER_FEE_BPS
+      description: Referrer fee in basis points.
+    - name: KURU_DEBUG_RESPONSE
+      description: Dump raw Kuru API responses for troubleshooting.
+global_flags:
+  - flag: --json
+    description: Machine-readable output for programmatic or agent callers.
+  - flag: --from <address>
+    description: Wallet address to prepare unsigned transactions for (prepare mode).
+command_groups:
+  - group: discovery
+    commands:
+      - command: bun run trade help
+        description: Show usage.
+      - command: bun run trade tokens
+        description: List the allowlisted tradable tokens.
+  - group: trading
+    commands:
+      - command: bun run trade buy <token> <usdcAmount>
+        description: Buy an allowed token with USDC; auto-broadcasts.
+        consequence: high
+      - command: bun run trade sell <token> <tokenAmount>
+        description: Sell an allowed token into USDC; auto-broadcasts.
+        consequence: high
+  - group: quoting
+    commands:
+      - command: bun run trade quote buy <token> <usdcAmount>
+        description: Estimate output for a buy without broadcasting.
+      - command: bun run trade quote sell <token> <tokenAmount>
+        description: Estimate output for a sell without broadcasting.
+  - group: prepare
+    commands:
+      - command: bun run trade prepare buy <token> <usdcAmount> --from <address>
+        description: >-
+          Return ordered unsigned transactions for a buy (approval first when
+          allowance is insufficient, then the swap).
+      - command: bun run trade prepare sell <token> <tokenAmount> --from <address>
+        description: Return ordered unsigned transactions for a sell.
+  - group: account
+    commands:
+      - command: bun run trade balance <token>
+        description: Check the wallet's balance of an allowed token via RPC.
+key_flows:
+  - name: quote-then-trade
+    steps:
+      - bun run trade tokens
+      - bun run trade quote buy <token> <usdcAmount>
+      - bun run trade buy <token> <usdcAmount>
+  - name: external-signer
+    description: >-
+      Prepare unsigned transactions, sign them elsewhere, and submit in order —
+      waiting for any approval transaction to mine before the swap.
+    steps:
+      - bun run trade prepare buy <token> <usdcAmount> --from <address> --json
+related:
+  agent_skill: skills/kuru-trading-skills.md
+  packages: packages/kuru-packages.yml

@@ -1,0 +1,103 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Kuru Flow API
+  version: 1.0.0
+extends: ../openapi/kuru-flow-openapi.json
+x-generated: '2026-07-19'
+x-method: generated
+x-source: >-
+  Derived from Kuru's published OpenAPI plus docs.kuru.io, status.kuru.io and
+  the Kuru-Labs agent skill. This overlay records OUR enhancements and never
+  mutates the upstream specification.
+actions:
+  - target: $.info
+    description: >-
+      Correct the title (upstream calls this the "WebSocket API" although both
+      documented operations are plain HTTP POST), add contact, licence-free
+      provenance, and the external docs the spec omits.
+    update:
+      title: Kuru Flow API
+      x-upstream-title: Kuru WebSocket API
+      x-title-note: >-
+        Upstream titles this the "Kuru WebSocket API", but the two documented
+        operations are HTTP POST endpoints on https://ws.kuru.io. Kuru's own
+        docs market this surface as the Kuru Flow API.
+      contact:
+        name: Kuru Labs
+        email: tech@kurulabs.xyz
+        url: https://docs.kuru.io/kuru-flow/flow-overview
+      x-provider: Kuru
+      x-chain: Monad
+      x-status-page: https://status.kuru.io
+  - target: $
+    description: Attach external documentation for the Flow aggregator.
+    update:
+      externalDocs:
+        description: Kuru Flow — smart routing aggregator overview
+        url: https://docs.kuru.io/kuru-flow/flow-overview
+  - target: $
+    description: >-
+      Declare tags so both operations are grouped; the upstream spec tags
+      nothing, which costs it contract-quality points.
+    update:
+      tags:
+        - name: Authentication
+          description: Minting short-lived JWTs for Flow API access.
+        - name: Routing
+          description: Swap route calculation and quoting across Monad liquidity.
+  - target: $.paths['/api/generate-token'].post
+    description: Tag the token-minting operation and document its rate-limit contract.
+    update:
+      tags:
+        - Authentication
+      x-rate-limit:
+        rps: 1
+        burst: 1
+        note: The minted token carries this limit; see rate-limits/kuru-rate-limits.yml.
+      x-action-class: read
+      x-consequence: low
+  - target: $.paths['/api/quote'].post
+    description: >-
+      Tag the quote operation and record that it is read-only — it returns
+      UNSIGNED transactions, so calling it has no on-chain effect.
+    update:
+      tags:
+        - Routing
+      x-action-class: read
+      x-consequence: low
+      x-side-effects: none
+      x-returns-unsigned-transactions: true
+      x-broadcast-note: >-
+        buildResponse contains unsigned transaction data. Broadcasting is a
+        separate, high-consequence step performed by the caller's wallet and is
+        not part of this API.
+      externalDocs:
+        description: Kuru Flow overview
+        url: https://docs.kuru.io/kuru-flow/flow-overview
+  - target: $.components.schemas.CalculateBestPathRequest
+    description: >-
+      Make the slippage mutual-exclusion rule explicit for humans; upstream
+      encodes it only in a oneOf that most generators drop.
+    update:
+      x-constraint-slippage: >-
+        Supply exactly one of: autoSlippage:true (without slippageTolerance), or
+        slippageTolerance with autoSlippage:false. Supplying both violates the
+        oneOf.
+      x-amount-format: >-
+        Base units as a decimal string (wei for 18-decimal tokens) to avoid
+        float precision loss.
+  - target: $.components.schemas.ErrorResponse
+    description: Record the error catalogue derived from the upstream response examples.
+    update:
+      x-error-catalog: errors/kuru-problem-types.yml
+      x-rfc9457: false
+      x-error-codes:
+        - invalid_json
+        - user_address_required
+        - missing_required_fields
+        - unauthorized
+        - method_not_allowed
+        - too_many_requests
+        - token_generation_failed
+        - calculation_failed
+        - service_unavailable

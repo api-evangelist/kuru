@@ -1,0 +1,83 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/kuru-flow-openapi.json
+summary: >-
+  Kuru publishes no hosted or remote MCP server. It does publish a first-party
+  agent skill (Kuru-Labs/kuru-trading-skills, a Bun CLI wrapped as a Codex
+  skill), which is its current agent-native surface. The tool list below is a
+  CANDIDATE derived one-to-one from the published Flow operations — it is a
+  proposal, not something Kuru ships.
+searched:
+  - target: docs.kuru.io
+    result: no MCP server documented
+  - target: npm (@kuru-labs scope)
+    result: only kuru-sdk and kuru-types; no MCP package
+  - target: GitHub Kuru-Labs org
+    result: kuru-trading-skills (agent skill, not MCP)
+official_agent_surface:
+  type: agent-skill
+  repository: https://github.com/Kuru-Labs/kuru-trading-skills
+  artifact: skills/kuru-trading-skills.md
+server:
+  name: kuru
+  transport: http
+  url: null
+  note: No published endpoint. Populate only if Kuru ships a hosted server.
+tools:
+  - name: generate_token
+    description: >-
+      Mint a short-lived JWT (1 RPS, burst 1) for a given Ethereum address, used
+      to authenticate Kuru Flow quote requests.
+    source_operation: openapi/kuru-flow-openapi.json#generateToken
+    method: POST
+    path: /api/generate-token
+    inputs:
+      - name: user_address
+        required: true
+        type: string
+        pattern: '^0x[a-fA-F0-9]{40}$'
+    action_class: read
+    consequence: low
+  - name: calculate_best_path
+    description: >-
+      Calculate the best swap route and quote across Monad liquidity for a token
+      pair and amount, returning the expected output and an unsigned
+      transaction build response.
+    source_operation: openapi/kuru-flow-openapi.json#calculateBestPath
+    method: POST
+    path: /api/quote
+    inputs:
+      - name: userAddress
+        required: true
+        type: string
+      - name: tokenIn
+        required: true
+        type: string
+      - name: tokenOut
+        required: true
+        type: string
+      - name: amount
+        required: true
+        type: string
+        note: base units (wei for 18-decimal tokens), as a string
+      - name: slippageTolerance
+        required: false
+        type: integer
+        note: basis points, 1..10000; mutually exclusive with autoSlippage:true
+      - name: autoSlippage
+        required: false
+        type: boolean
+      - name: referrerAddress
+        required: false
+        type: string
+      - name: referrerFeeBps
+        required: false
+        type: integer
+    auth: BearerAuth (JWT) or ApiKeyAuth (X-API-Key)
+    action_class: read
+    consequence: low
+    note: >-
+      Quoting is read-only. It returns unsigned transactions; broadcasting them
+      is a separate, high-consequence step performed by the caller's wallet and
+      is deliberately NOT modelled as a tool here.

@@ -1,0 +1,63 @@
+generated: '2026-07-19'
+method: searched
+source: https://registry.npmjs.org/ + https://pypi.org/pypi/kuru-sdk/json + https://github.com/Kuru-Labs
+notes: >-
+  First-party client libraries published by Kuru Labs (GitHub org Kuru-Labs,
+  operating as Toxic Flow Labs, https://www.kurulabs.xyz/). Registry probes:
+  npm 200, PyPI 200. Maven Central, NuGet, pkg.go.dev, RubyGems, Packagist and
+  crates.io were probed and returned no first-party Kuru client library.
+packages:
+  - language: typescript
+    registry: npm
+    name: '@kuru-labs/kuru-sdk'
+    url: https://www.npmjs.com/package/@kuru-labs/kuru-sdk
+    install: npm i @kuru-labs/kuru-sdk
+    version: 0.0.95
+    beta_version: 1.0.3
+    description: SDK to interact with Kuru
+    docs: https://docs.kuru.io/sdk/SDK-landing
+    repository: https://github.com/Kuru-Labs/kuru-sdk
+    official: true
+  - language: typescript
+    registry: npm
+    name: '@kuru-labs/kuru-types'
+    url: https://www.npmjs.com/package/@kuru-labs/kuru-types
+    install: npm i @kuru-labs/kuru-types
+    version: 0.0.9
+    description: Shared Zod schemas and inferred TypeScript types for Kuru
+    official: true
+  - language: python
+    registry: pypi
+    name: kuru-sdk
+    url: https://pypi.org/project/kuru-sdk/
+    install: pip install kuru-sdk
+    version: 0.2.8
+    description: Python SDK for Kuru's Central Limit Orderbook (CLOB)
+    author: Kuru Labs
+    author_email: tech@kurulabs.xyz
+    repository: https://github.com/Kuru-Labs/kuru-sdk-py
+    official: true
+third_party:
+  - language: typescript
+    registry: npm
+    name: '@devasher/kuru-sdk'
+    url: https://www.npmjs.com/package/@devasher/kuru-sdk
+    description: Ethers v6 SDK to interact with Kuru (community fork of @kuru-labs/kuru-sdk)
+    official: false
+registries_probed:
+  - registry: npm
+    result: found
+  - registry: pypi
+    result: found
+  - registry: maven-central
+    result: none
+  - registry: nuget
+    result: none
+  - registry: pkg.go.dev
+    result: none
+  - registry: rubygems
+    result: none
+  - registry: packagist
+    result: none
+  - registry: crates.io
+    result: none

@@ -1,0 +1,37 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/kuru-flow-openapi.json
+docs: https://docs.kuru.io/api-reference/generate-jwt-token
+api: Kuru Flow API
+summary: >-
+  Kuru Flow issues per-address JWTs that carry an explicit rate limit returned
+  in the token response body. The limit is published as structured data on the
+  token, not as response headers — no RateLimit-* or Retry-After headers are
+  documented.
+limits:
+  - scope: jwt-per-user-address
+    requests_per_second: 1
+    burst: 1
+    applies_to:
+      - calculateBestPath
+    issued_by: POST https://ws.kuru.io/api/generate-token
+    signalled_in: response body field rate_limit { rps, burst }
+    example:
+      rps: 1
+      burst: 1
+signalling:
+  headers_documented: false
+  rate_limit_headers: none
+  retry_after: not documented
+  note: >-
+    Clients learn their limit at token-mint time (rate_limit object) rather than
+    per-response. Exceeding it returns HTTP 429 with { "error":
+    "too_many_requests" }.
+exceeded:
+  status: 429
+  error: too_many_requests
+  guidance: Throttle to 1 RPS client-side and retry with exponential backoff.
+api_key_tier:
+  note: >-
+    An X-API-Key scheme exists alongside the JWT, but Kuru publishes no rate
+    limit figures for API-key holders. Not recorded here rather than guessed.

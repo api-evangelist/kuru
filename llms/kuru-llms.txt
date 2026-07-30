@@ -1,0 +1,64 @@
+# Kuru Documentation
+
+> Kuru is a fully on-chain order book DEX and smart aggregator built on Monad. It combines a Central Limit Order Book (CLOB) with AMM liquidity for low-slippage, self-custody trading.
+
+## Overview
+
+- [Kuru](https://docs.kuru.io/): The Trading Hub for Monad
+
+## SDK
+
+- [Quick Start](https://docs.kuru.io/sdk/quickstart-sdk): Get up and running with the SDK
+- [SDK Overview](https://docs.kuru.io/sdk/SDK-landing): Interface with Kuru contracts
+- [OrderBook SDK](https://docs.kuru.io/sdk/orderbook-sdk): Place orders, manage positions
+- [Deploy Markets](https://docs.kuru.io/sdk/deploy-market): Create new trading pairs
+- [Vault SDK](https://docs.kuru.io/sdk/KuruAmmVault-sdk): Deposit/withdraw from vaults
+
+## Smart Contracts
+
+- [Architecture Overview](https://docs.kuru.io/contracts/Architecture-overview): System design
+- [Router Contract](https://docs.kuru.io/contracts/Router): Central orchestrator
+- [OrderBook Contract](https://docs.kuru.io/contracts/OrderBook): CLOB implementation
+- [MarginAccount](https://docs.kuru.io/contracts/MarginAccount): User balance management
+- [KuruAMMVault](https://docs.kuru.io/contracts/KuruAMMVault): AMM liquidity vault
+- [Vaults Technical](https://docs.kuru.io/contracts/Vaults-technical): Deep dive
+- [Contract Addresses](https://docs.kuru.io/contracts/Contract-addresses): Mainnet/testnet
+- [Audits](https://docs.kuru.io/contracts/Audits): Security audits (Spearbit, Cantina)
+- [Integration](https://docs.kuru.io/contracts/Integration): Index markets and trades
+
+## Kuru Flow API
+
+- [Kuru Flow](https://docs.kuru.io/kuru-flow/flow-overview): Smart routing aggregator
+
+## Concepts
+
+- [Why Monad](https://docs.kuru.io/concepts/why-monad): EVM L1 enabling on-chain CLOBs
+- [WTF is a CLOB](https://docs.kuru.io/concepts/wtfisaclob): Central limit order book explainer
+- [Liquidity Types](https://docs.kuru.io/concepts/liquidity): Four liquidity sources on Kuru
+- [Flip Orders](https://docs.kuru.io/concepts/flip-orders): Concentrated liquidity primitive
+- [Backstop AMM](https://docs.kuru.io/concepts/backstop-amm): Instant liquidity mechanism
+
+## Liquidity
+
+- [Quick Start](https://docs.kuru.io/liquidity/quick-start-guide): Begin providing liquidity
+- [How LP Works](https://docs.kuru.io/liquidity/how-liquidity-provisioning-works): LP mechanics
+- [Liquidity Shapes](https://docs.kuru.io/liquidity/liquidity-shapes-explained): Curve, Spot, BidAsk
+- [Fees](https://docs.kuru.io/liquidity/how-fees-work): Earnings from spreads
+- [LP Strategies](https://docs.kuru.io/liquidity/single-sided-vs-balanced): Comparison
+- [Risks](https://docs.kuru.io/liquidity/risks-impermanent-loss): Impermanent loss explained
+
+## Product
+
+- [Wallet](https://docs.kuru.io/product/wallet): Embedded Privy wallet
+- [Flow](https://docs.kuru.io/product/flow): Smart aggregator UI
+- [Swap](https://docs.kuru.io/product/swap): Token exchange interface
+- [Discover](https://docs.kuru.io/product/discover): Token discovery
+- [Trade](https://docs.kuru.io/product/trade): Trading terminal
+- [Vaults](https://docs.kuru.io/product/vaults): Managed liquidity
+- [Portfolio](https://docs.kuru.io/product/portfolio): Holdings view
+- [Referrals](https://docs.kuru.io/product/referrals): Reward program
+- [Launch](https://docs.kuru.io/product/launch): Token deployment
+
+## Legal
+
+- [TradingView](https://docs.kuru.io/legal/tradingview): Integration terms

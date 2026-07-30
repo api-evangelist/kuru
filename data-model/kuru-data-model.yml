@@ -1,0 +1,164 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/kuru-flow-openapi.json + https://docs.kuru.io/contracts/Architecture-overview
+api: Kuru Flow API
+summary: >-
+  The Flow API's own schema graph is shallow — two request/response pairs and a
+  shared error envelope. The meaningful entity graph is on-chain (Router,
+  OrderBook, MarginAccount, KuruAMMVault), so the contract entities are recorded
+  alongside the HTTP schemas, with relationships derived from Kuru's published
+  architecture and integration docs.
+http_entities:
+  - name: TokenGenerationRequest
+    kind: request
+    fields:
+      - name: user_address
+        type: string
+        format: evm-address
+        required: true
+  - name: TokenGenerationResponse
+    kind: response
+    fields:
+      - name: token
+        type: string
+        format: jwt
+      - name: expires_at
+        type: integer
+        format: unix-timestamp
+      - name: rate_limit
+        type: object
+        fields: [rps, burst]
+  - name: CalculateBestPathRequest
+    kind: request
+    fields:
+      - name: userAddress
+        type: string
+        format: evm-address
+        required: true
+      - name: tokenIn
+        type: string
+        format: evm-address
+        required: true
+        references: Token
+      - name: tokenOut
+        type: string
+        format: evm-address
+        required: true
+        references: Token
+      - name: amount
+        type: string
+        format: base-units
+        required: true
+      - name: slippageTolerance
+        type: integer
+        format: basis-points
+      - name: autoSlippage
+        type: boolean
+      - name: referrerAddress
+        type: string
+        format: evm-address
+      - name: referrerFeeBps
+        type: integer
+        format: basis-points
+  - name: CalculateBestPathResponse
+    kind: response
+    fields:
+      - name: type
+        type: string
+      - name: status
+        type: string
+        enum: [success, error]
+      - name: output
+        type: string
+        format: base-units
+      - name: path
+        type: object
+        note: SwapRoute — the ordered set of markets the swap traverses
+      - name: buildResponse
+        type: object
+        note: Unsigned transaction build output
+      - name: gasPrices
+        type: object
+  - name: ErrorResponse
+    kind: shared
+    reused_by: [generateToken, calculateBestPath]
+    fields:
+      - name: error
+        type: string
+        required: true
+      - name: message
+        type: string
+onchain_entities:
+  - name: Router
+    role: Market factory and central orchestrator
+    docs: https://docs.kuru.io/contracts/Router
+    emits: [MarketRegistered]
+  - name: OrderBook
+    role: Central limit order book implementation, one per market
+    docs: https://docs.kuru.io/contracts/OrderBook
+    emits: [Trade, OrderCreated]
+  - name: MarginAccount
+    role: Per-user balance custody funding order placement
+    docs: https://docs.kuru.io/contracts/MarginAccount
+  - name: KuruAMMVault
+    role: AMM liquidity vault providing passive liquidity to a market
+    docs: https://docs.kuru.io/contracts/KuruAMMVault
+  - name: Market
+    role: A trading pair (e.g. MON-USDC), addressed by contract
+  - name: Token
+    role: ERC-20 token on Monad
+    id_format: '^0x[a-fA-F0-9]{40}$'
+  - name: Order
+    role: A resting or filled order
+    id_field: orderId
+    id_type: uint40
+    note: Emitted in OrderCreated(uint40,address,uint96,uint32,bool)
+relationships:
+  - from: Router
+    to: Market
+    type: has_many
+    via: MarketRegistered event
+    evidence: https://docs.kuru.io/contracts/Integration
+  - from: Market
+    to: OrderBook
+    type: has_one
+    via: market address is the OrderBook contract
+  - from: Market
+    to: Token
+    type: has_many
+    via: base/quote token pair
+  - from: OrderBook
+    to: Order
+    type: has_many
+    via: orderId
+  - from: Order
+    to: Trade
+    type: has_many
+    via: orderId in Trade event
+  - from: MarginAccount
+    to: Token
+    type: has_many
+    via: per-token user balance
+  - from: KuruAMMVault
+    to: Market
+    type: belongs_to
+    via: vault provides liquidity to one market
+  - from: CalculateBestPathResponse
+    to: Market
+    type: has_many
+    via: path (SwapRoute) traverses one or more markets
+indexing:
+  note: >-
+    Kuru documents a two-event indexing recipe — listen to Router
+    MarketRegistered to discover every market, then subscribe to each market's
+    OrderBook Trade event.
+  docs: https://docs.kuru.io/contracts/Integration
+  events:
+    - name: MarketRegistered
+      source: Router
+    - name: Trade
+      source: OrderBook
+      signature: Trade(uint40,address,bool,uint256,uint96,address,address,uint96)
+    - name: OrderCreated
+      source: OrderBook
+      signature: OrderCreated(uint40,address,uint96,uint32,bool)

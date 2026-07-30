@@ -1,0 +1,32 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/Kuru-Labs/kuru-trading-skills
+notes: >-
+  Kuru Labs publishes its own packaged agent skill (SKILL.md) in the
+  Kuru-Labs/kuru-trading-skills repository. Saved verbatim rather than
+  generating our own, per the searched > generated rule.
+skills:
+  - name: kuru-trading-skills
+    file: kuru-trading-skills.md
+    method: searched
+    source: https://raw.githubusercontent.com/Kuru-Labs/kuru-trading-skills/main/SKILL.md
+    repository: https://github.com/Kuru-Labs/kuru-trading-skills
+    official: true
+    api: Kuru Flow API
+    runtime: bun
+    description: >-
+      Trade and inspect balances for an allowlist of Kuru tokens on Monad
+      mainnet via Kuru Flow — buy, sell, quote, prepare (unsigned tx), balance,
+      and token listing.
+    operations:
+      - generateToken
+      - calculateBestPath
+    commands:
+      - bun run trade tokens
+      - bun run trade buy <token> <usdcAmount>
+      - bun run trade sell <token> <tokenAmount>
+      - bun run trade quote buy <token> <usdcAmount>
+      - bun run trade quote sell <token> <tokenAmount>
+      - bun run trade prepare buy <token> <usdcAmount> --from <address>
+      - bun run trade prepare sell <token> <tokenAmount> --from <address>
+      - bun run trade balance <token>

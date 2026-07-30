@@ -1,0 +1,86 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/kuru-flow-openapi.json + https://docs.kuru.io/
+api: Kuru Flow API
+summary: >-
+  Kuru Flow is a small, POST-only JSON routing API in front of an on-chain
+  order book. Cross-cutting semantics are recorded below strictly as published
+  — where Kuru documents nothing (idempotency, pagination, versioning headers),
+  that is recorded as absent rather than assumed.
+authentication:
+  style: bearer-jwt-or-api-key
+  detail: authentication/kuru-authentication.yml
+  headers:
+    - 'Authorization: Bearer <JWT>'
+    - 'X-API-Key: <key>'
+idempotency:
+  supported: false
+  header: none
+  note: >-
+    No idempotency key is documented. Both endpoints are POST but neither
+    mutates chain state: /api/generate-token mints a token and /api/quote is a
+    read-only routing calculation whose result is a set of unsigned
+    transactions. Settlement idempotency is provided by the Monad chain itself
+    (a signed transaction with a given nonce executes at most once), not by the
+    HTTP API.
+    Because the HTTP API declares no idempotency mechanism, this repo does NOT
+    emit an `Idempotency` pointer in apis.yml.
+pagination:
+  supported: false
+  note: Neither endpoint returns a collection; no pagination surface exists.
+http:
+  methods: [POST]
+  note: Both documented operations are POST only; GET returns 405 method_not_allowed.
+  request_media_type: application/json
+  response_media_type: application/json
+error_envelope:
+  shape: '{ "error": "<code>", "message": "<optional human text>" }'
+  rfc9457: false
+  detail: errors/kuru-problem-types.yml
+rate_limiting:
+  style: token-embedded
+  detail: rate-limits/kuru-rate-limits.yml
+  note: Limit is published in the token-mint response (rate_limit.rps / .burst), not in headers.
+versioning:
+  scheme: spec-version-only
+  current: '1.0.0'
+  in_path: false
+  in_header: false
+  note: >-
+    The OpenAPI declares info.version 1.0.0. There is no version segment in the
+    URL and no version header documented. Contract versioning in practice is
+    handled by deploying new contract addresses (see sandbox/ and
+    https://docs.kuru.io/contracts/Contract-addresses).
+request_tracing:
+  request_id_header: not documented
+field_conventions:
+  address_format: '^0x[a-fA-F0-9]{40}$ (EVM address)'
+  amount_format: >-
+    Decimal string in base units (wei for 18-decimal tokens), passed as a JSON
+    string to avoid float precision loss.
+  basis_points: >-
+    slippageTolerance and referrerFeeBps are integers in basis points
+    (50 = 0.5%), range 1..10000 and 0..10000 respectively.
+  naming: >-
+    Mixed. The token endpoint uses snake_case (user_address, expires_at,
+    rate_limit); the quote endpoint uses camelCase (userAddress, tokenIn,
+    tokenOut, slippageTolerance). Documented here because it is a real
+    inconsistency integrators must handle.
+constraints:
+  - name: slippage-exclusivity
+    rule: >-
+      CalculateBestPathRequest declares a oneOf — supply autoSlippage:true
+      WITHOUT slippageTolerance, or supply slippageTolerance with
+      autoSlippage:false. Supplying both is a schema violation.
+monetization:
+  referrer_fees: >-
+    Integrators may append their own fee via referrerAddress + referrerFeeBps on
+    the quote request, which is how wallets and aggregators monetize Kuru Flow.
+  docs: https://docs.kuru.io/kuru-flow/flow-overview
+cross_references:
+  errors: errors/kuru-problem-types.yml
+  authentication: authentication/kuru-authentication.yml
+  rate_limits: rate-limits/kuru-rate-limits.yml
+  lifecycle: lifecycle/kuru-lifecycle.yml
+  sandbox: sandbox/kuru-sandbox.yml
+  data_model: data-model/kuru-data-model.yml

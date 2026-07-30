@@ -1,0 +1,52 @@
+generated: '2026-07-19'
+method: searched
+source: https://status.kuru.io + https://docs.kuru.io/contracts/Contract-addresses
+api: Kuru Flow API
+summary: >-
+  Kuru operates a public status page. It publishes no written deprecation
+  policy, no SLA, and no dated changelog that this pass could find; contract
+  lifecycle is managed by publishing mainnet and testnet address tables.
+status_page:
+  present: true
+  url: https://status.kuru.io
+  title: Kuru Labs status
+  provider: Better Stack
+  http_status: 200
+  description: Real-time and historical data on system performance.
+versioning:
+  scheme: spec-version-only
+  current_version: '1.0.0'
+  url_versioned: false
+  note: See conventions/kuru-conventions.yml for the full versioning posture.
+deprecation:
+  policy_published: false
+  sunset_header: not documented
+  deprecation_header: not documented
+  rfc8594: false
+  deprecated_operations: []
+  note: >-
+    No deprecation or sunset policy was found on docs.kuru.io. No operation in
+    the published OpenAPI is marked deprecated. Because no policy exists, this
+    repo does NOT emit a `Deprecation` pointer in apis.yml.
+sla:
+  published: false
+changelog:
+  published: false
+  note: >-
+    No dated changelog or release-notes page was found on docs.kuru.io or
+    blog.kuru.io. Package release history is visible on npm and PyPI, but that
+    is a registry artifact, not a provider changelog — no ChangeLog pointer is
+    emitted.
+contract_lifecycle:
+  note: >-
+    Because Kuru is an on-chain protocol, version transitions are expressed as
+    new deployed contract addresses rather than API versions.
+  addresses_doc: https://docs.kuru.io/contracts/Contract-addresses
+  environments:
+    - name: mainnet
+      chain: Monad
+    - name: testnet
+      chain: Monad testnet
+audits:
+  note: Third-party security audits are recorded in conformance/kuru-conformance.yml.
+  url: https://docs.kuru.io/contracts/Audits

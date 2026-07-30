@@ -1,0 +1,60 @@
+generated: '2026-07-19'
+method: searched
+source: direct HTTP probe of each host
+summary: >-
+  No /.well-known/ discovery documents are published on any Kuru host. Probed
+  2026-07-19; every path returned a non-200. Recorded as an honest negative —
+  no files were saved because none exist.
+hosts:
+  - host: https://ws.kuru.io
+    note: API host from OpenAPI servers[]. Returns 400 for all /.well-known/ paths.
+    documents:
+      - path: /.well-known/security.txt
+        status: 400
+      - path: /.well-known/openid-configuration
+        status: 400
+      - path: /.well-known/oauth-authorization-server
+        status: 400
+      - path: /.well-known/api-catalog
+        status: 400
+      - path: /.well-known/ai-plugin.json
+        status: 400
+  - host: https://www.kuru.io
+    note: Primary website host.
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: https://docs.kuru.io
+    note: Documentation host. Publishes /llms.txt (200) but no /.well-known/ surface.
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+agent_discovery:
+  llms_txt:
+    present: true
+    url: https://docs.kuru.io/llms.txt
+    status: 200
+    saved_as: llms/kuru-llms.txt
+    note: >-
+      Kuru's agent-facing discovery is served via llms.txt rather than a
+      /.well-known/ catalog.
+security_txt:
+  present: false
+  note: >-
+    No RFC 9116 security.txt on any host, so no SecurityTxt pointer is emitted.
