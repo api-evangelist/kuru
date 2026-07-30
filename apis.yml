@@ -1,23 +1,99 @@
 aid: kuru
 name: Kuru
-description: 'Kuru is a company surfaced as a portfolio company of electric-capital, paradigm and added
-  to the API Evangelist network as a stub for enrichment. Sector: defi. This profile is a lead awaiting
-  the enrichment pipeline.'
+description: >-
+  Kuru is a fully on-chain central limit order book (CLOB) decentralized
+  exchange and smart routing aggregator built on Monad, operated by Kuru Labs.
+  It combines an on-chain order book with AMM vault liquidity to deliver
+  low-slippage, self-custody trading, and exposes the Kuru Flow API — a
+  liquidity-aggregating routing engine that lets wallets, dApps and aggregators
+  quote and build any-token-to-any-token swaps across every market on Monad,
+  optionally appending their own referrer fee. Developers integrate through a
+  TypeScript SDK, a Python CLOB SDK for market making, published and audited
+  Solidity contracts, and a first-party agent skill for automated trading.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://www.kuru.io/favicon-96x96.png
 url: https://raw.githubusercontent.com/api-evangelist/kuru/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - electric-capital
 - paradigm
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: enrichment-pipeline
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
-- Defi
-apis: []
+- DeFi
+- Decentralized Exchange
+- Order Book
+- Trading
+- Blockchain
+- Monad
+- Liquidity
+- Swaps
+- Web3
+apis:
+- aid: kuru:kuru-generate-token-api
+  name: Kuru Generate Token API
+  description: The Generate Token API from Kuru — 1 operation(s) for generate token.
+  humanURL: https://docs.kuru.io/kuru-flow/flow-overview
+  baseURL: https://ws.kuru.io
+  tags:
+  - Generate Token
+  properties:
+  - type: OpenAPI
+    url: openapi/kuru-generate-token-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kuru.io/kuru-flow/flow-overview
+  - type: APIReference
+    url: https://docs.kuru.io/api-reference/generate-jwt-token
+  - type: Authentication
+    url: authentication/kuru-authentication.yml
+  - type: ErrorCatalog
+    url: errors/kuru-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/kuru-rate-limits.yml
+  - type: Conventions
+    url: conventions/kuru-conventions.yml
+  - type: DataModel
+    url: data-model/kuru-data-model.yml
+- aid: kuru:kuru-quote-api
+  name: Kuru Quote API
+  description: The Quote API from Kuru — 1 operation(s) for quote.
+  humanURL: https://docs.kuru.io/kuru-flow/flow-overview
+  baseURL: https://ws.kuru.io
+  tags:
+  - Quote
+  properties:
+  - type: OpenAPI
+    url: openapi/kuru-quote-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kuru.io/kuru-flow/flow-overview
+  - type: APIReference
+    url: https://docs.kuru.io/api-reference/generate-jwt-token
+  - type: Authentication
+    url: authentication/kuru-authentication.yml
+  - type: ErrorCatalog
+    url: errors/kuru-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/kuru-rate-limits.yml
+  - type: Conventions
+    url: conventions/kuru-conventions.yml
+  - type: DataModel
+    url: data-model/kuru-data-model.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -26,3 +102,60 @@ maintainers:
 common:
 - type: Website
   url: https://www.kuru.io/
+- type: DeveloperPortal
+  url: https://docs.kuru.io/
+- type: Documentation
+  url: https://docs.kuru.io/
+- type: APIReference
+  url: https://docs.kuru.io/api-reference/generate-jwt-token
+- type: GettingStarted
+  url: https://docs.kuru.io/sdk/quickstart-sdk
+- type: Blog
+  url: https://blog.kuru.io
+- type: GitHubOrganization
+  url: https://github.com/Kuru-Labs
+- type: StatusPage
+  url: lifecycle/kuru-lifecycle.yml
+- type: Pricing
+  url: https://docs.kuru.io/liquidity/how-fees-work
+- type: SignUp
+  url: https://www.kuru.io/
+- type: TermsOfService
+  url: https://docs.kuru.io/legal/tradingview
+- type: Packages
+  url: packages/kuru-packages.yml
+- type: SDKs
+  url: packages/kuru-packages.yml
+- type: CLI
+  url: cli/kuru-cli.yml
+- type: Sandbox
+  url: sandbox/kuru-sandbox.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: MCPServer
+  url: mcp/kuru-mcp.yml
+- type: LLMsTxt
+  url: llms/kuru-llms.txt
+- type: WellKnown
+  url: well-known/kuru-well-known.yml
+- type: Conformance
+  url: conformance/kuru-conformance.yml
+- type: Lifecycle
+  url: lifecycle/kuru-lifecycle.yml
+- type: Conventions
+  url: conventions/kuru-conventions.yml
+- type: DataModel
+  url: data-model/kuru-data-model.yml
+- type: Authentication
+  url: authentication/kuru-authentication.yml
+- type: ErrorCatalog
+  url: errors/kuru-problem-types.yml
+- type: RateLimits
+  url: rate-limits/kuru-rate-limits.yml
+- type: DomainSecurity
+  url: security/kuru-domain-security.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
