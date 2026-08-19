@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kuru WebSocket Generate Token API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Generate Token",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate JWT Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://ws.kuru.io/api/generate-token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates a JWT token with 1 RPS rate limiting for a given user address"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

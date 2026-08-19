@@ -1,0 +1,453 @@
+{
+  "item": [
+    {
+      "id": "a2d375c7-d886-4276-8853-ea897f4cd40a",
+      "name": "Quote",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4cf6d162-4f5c-4d87-b401-0a858f2925ed",
+          "name": "Calculate Best Path Quote",
+          "request": {
+            "name": "Calculate Best Path Quote",
+            "description": {
+              "content": "Calculates the best swap path and quote for given token pair and amount",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "quote"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"autoSlippage\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "42b71521-ee7c-4862-9325-221055dc0e76",
+              "name": "Successfully calculated best path",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userAddress\": \"0x1234567890abcdef1234567890abcdef12345678\",\n  \"tokenIn\": \"0x0000000000000000000000000000000000000000\",\n  \"tokenOut\": \"0x754704bc059f8c67012fed69bc8a327a5aafb603\",\n  \"amount\": \"1000000000000000000\",\n  \"slippageTolerance\": 50,\n  \"autoSlippage\": true,\n  \"referrerAddress\": \"0x5678567856785678567856785678567856785678\",\n  \"referrerFeeBps\": 25\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"swap_calculation\",\n  \"status\": \"success\",\n  \"output\": \"950000000000000000\",\n  \"path\": {},\n  \"buildResponse\": {},\n  \"gasPrices\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9ce479e-af9b-4dd2-b641-591d50fb74b1",
+              "name": "Bad Request - Invalid input",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userAddress\": \"0x1234567890abcdef1234567890abcdef12345678\",\n  \"tokenIn\": \"0x0000000000000000000000000000000000000000\",\n  \"tokenOut\": \"0x754704bc059f8c67012fed69bc8a327a5aafb603\",\n  \"amount\": \"1000000000000000000\",\n  \"slippageTolerance\": 50,\n  \"autoSlippage\": true,\n  \"referrerAddress\": \"0x5678567856785678567856785678567856785678\",\n  \"referrerFeeBps\": 25\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"invalid_json\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c4ecacc-215f-45a8-bcd0-dea1a95214de",
+              "name": "Unauthorized - Invalid or missing authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userAddress\": \"0x1234567890abcdef1234567890abcdef12345678\",\n  \"tokenIn\": \"0x0000000000000000000000000000000000000000\",\n  \"tokenOut\": \"0x754704bc059f8c67012fed69bc8a327a5aafb603\",\n  \"amount\": \"1000000000000000000\",\n  \"slippageTolerance\": 50,\n  \"autoSlippage\": true,\n  \"referrerAddress\": \"0x5678567856785678567856785678567856785678\",\n  \"referrerFeeBps\": 25\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6663b8e2-5959-4eae-bb01-aa34d72b2563",
+              "name": "Method Not Allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userAddress\": \"0x1234567890abcdef1234567890abcdef12345678\",\n  \"tokenIn\": \"0x0000000000000000000000000000000000000000\",\n  \"tokenOut\": \"0x754704bc059f8c67012fed69bc8a327a5aafb603\",\n  \"amount\": \"1000000000000000000\",\n  \"slippageTolerance\": 50,\n  \"autoSlippage\": true,\n  \"referrerAddress\": \"0x5678567856785678567856785678567856785678\",\n  \"referrerFeeBps\": 25\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"method_not_allowed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "725ea377-d7dd-4959-8d56-4d737c10ad55",
+              "name": "Too Many Requests - Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userAddress\": \"0x1234567890abcdef1234567890abcdef12345678\",\n  \"tokenIn\": \"0x0000000000000000000000000000000000000000\",\n  \"tokenOut\": \"0x754704bc059f8c67012fed69bc8a327a5aafb603\",\n  \"amount\": \"1000000000000000000\",\n  \"slippageTolerance\": 50,\n  \"autoSlippage\": true,\n  \"referrerAddress\": \"0x5678567856785678567856785678567856785678\",\n  \"referrerFeeBps\": 25\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"too_many_requests\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f18900a-7f75-41df-8684-405e593230d6",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userAddress\": \"0x1234567890abcdef1234567890abcdef12345678\",\n  \"tokenIn\": \"0x0000000000000000000000000000000000000000\",\n  \"tokenOut\": \"0x754704bc059f8c67012fed69bc8a327a5aafb603\",\n  \"amount\": \"1000000000000000000\",\n  \"slippageTolerance\": 50,\n  \"autoSlippage\": true,\n  \"referrerAddress\": \"0x5678567856785678567856785678567856785678\",\n  \"referrerFeeBps\": 25\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"calculation_failed\",\n  \"message\": \"Failed to calculate swap path\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f153bbba-2139-4e35-a9b4-c43e592ac1f4",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userAddress\": \"0x1234567890abcdef1234567890abcdef12345678\",\n  \"tokenIn\": \"0x0000000000000000000000000000000000000000\",\n  \"tokenOut\": \"0x754704bc059f8c67012fed69bc8a327a5aafb603\",\n  \"amount\": \"1000000000000000000\",\n  \"slippageTolerance\": 50,\n  \"autoSlippage\": true,\n  \"referrerAddress\": \"0x5678567856785678567856785678567856785678\",\n  \"referrerFeeBps\": 25\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"service_unavailable\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://ws.kuru.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8d2e7ba9-4bb7-45f3-896d-e694e0a1d038",
+    "name": "Kuru WebSocket Generate Token Quote API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for Kuru WebSocket services including JWT token generation and swap quote calculations",
+      "type": "text/plain"
+    }
+  }
+}

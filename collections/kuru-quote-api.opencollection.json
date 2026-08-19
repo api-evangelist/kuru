@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kuru WebSocket Generate Token Quote API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Quote",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Calculate Best Path Quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://ws.kuru.io/api/quote",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Calculates the best swap path and quote for given token pair and amount"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
