@@ -76,6 +76,8 @@ apis:
   humanURL: https://docs.kuru.io/kuru-flow/flow-overview
   baseURL: https://ws.kuru.io
   tags:
+  - Quotes
+  tags_raw:
   - Quote
   properties:
   - type: OpenAPI
