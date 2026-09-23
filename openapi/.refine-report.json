@@ -1,8 +1,7 @@
 {
   "provider": "kuru",
   "sources": [
-    "kuru-generate-token-api-openapi.yml",
-    "kuru-quote-api-openapi.yml"
+    "_original/kuru-flow-openapi.json"
   ],
   "outputs": [
     "kuru-generate-token-api-openapi.yml",
@@ -11,6 +10,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "kuru-flow-openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "kuru-flow-openapi.json: tagged paths POST /api/generate-token -> Generate Token",
+    "kuru-flow-openapi.json: tagged paths POST /api/quote -> Quote",
+    "kuru-flow-openapi.json: declared missing tag: Generate Token",
+    "kuru-flow-openapi.json: declared missing tag: Quote",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "kuru-generate-token-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kuru-quote-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

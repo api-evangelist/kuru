@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Kuru WebSocket Generate Token API
   description: API for Kuru WebSocket services including JWT token generation and swap quote calculations
@@ -68,29 +68,6 @@ paths:
       - Generate Token
 components:
   schemas:
-    TokenGenerationResponse:
-      type: object
-      properties:
-        token:
-          type: string
-          description: JWT token string
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-        expires_at:
-          type: integer
-          format: int64
-          description: Token expiration timestamp (Unix timestamp)
-          example: 1700000000
-        rate_limit:
-          type: object
-          properties:
-            rps:
-              type: integer
-              description: Requests per second allowed
-              example: 1
-            burst:
-              type: integer
-              description: Burst capacity for rate limiting
-              example: 1
     ErrorResponse:
       type: object
       required:
@@ -114,6 +91,29 @@ components:
           description: Ethereum address of the user
           pattern: ^0x[a-fA-F0-9]{40}$
           example: '0x1234567890abcdef1234567890abcdef12345678'
+    TokenGenerationResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: JWT token string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        expires_at:
+          type: integer
+          format: int64
+          description: Token expiration timestamp (Unix timestamp)
+          example: 1700000000
+        rate_limit:
+          type: object
+          properties:
+            rps:
+              type: integer
+              description: Requests per second allowed
+              example: 1
+            burst:
+              type: integer
+              description: Burst capacity for rate limiting
+              example: 1
   securitySchemes:
     BearerAuth:
       type: http

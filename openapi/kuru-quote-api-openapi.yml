@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Kuru WebSocket Generate Token Quote API
+  title: Kuru WebSocket Quote API
   description: API for Kuru WebSocket services including JWT token generation and swap quote calculations
   version: 1.0.0
 servers:
@@ -104,6 +104,49 @@ paths:
       - Quote
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Error code or type
+          example: invalid_json
+        message:
+          type: string
+          description: Human-readable error message
+          example: Invalid JSON format in request body
+    CalculateBestPathResponse:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Response type identifier
+          example: swap_calculation
+        status:
+          type: string
+          description: Status of the calculation
+          enum:
+          - success
+          - error
+          example: success
+        output:
+          type: string
+          description: Expected output amount
+          example: '950000000000000000'
+        message:
+          type: string
+          description: Status or error message
+        path:
+          type: object
+          description: Swap route information (tx_builder.SwapRoute)
+        buildResponse:
+          type: object
+          description: Transaction build response (tx_builder.BuildResponse)
+        gasPrices:
+          type: object
+          description: Gas price information (swapcalc.GasPriceInfo)
     CalculateBestPathRequest:
       type: object
       required:
@@ -172,49 +215,6 @@ components:
           minimum: 0
           maximum: 10000
           example: 25
-    ErrorResponse:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          description: Error code or type
-          example: invalid_json
-        message:
-          type: string
-          description: Human-readable error message
-          example: Invalid JSON format in request body
-    CalculateBestPathResponse:
-      type: object
-      properties:
-        type:
-          type: string
-          description: Response type identifier
-          example: swap_calculation
-        status:
-          type: string
-          description: Status of the calculation
-          enum:
-          - success
-          - error
-          example: success
-        output:
-          type: string
-          description: Expected output amount
-          example: '950000000000000000'
-        message:
-          type: string
-          description: Status or error message
-        path:
-          type: object
-          description: Swap route information (tx_builder.SwapRoute)
-        buildResponse:
-          type: object
-          description: Transaction build response (tx_builder.BuildResponse)
-        gasPrices:
-          type: object
-          description: Gas price information (swapcalc.GasPriceInfo)
   securitySchemes:
     BearerAuth:
       type: http
