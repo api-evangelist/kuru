@@ -81,16 +81,6 @@ components:
           type: string
           description: Human-readable error message
           example: Invalid JSON format in request body
-    TokenGenerationRequest:
-      type: object
-      required:
-      - user_address
-      properties:
-        user_address:
-          type: string
-          description: Ethereum address of the user
-          pattern: ^0x[a-fA-F0-9]{40}$
-          example: '0x1234567890abcdef1234567890abcdef12345678'
     TokenGenerationResponse:
       type: object
       properties:
@@ -114,6 +104,16 @@ components:
               type: integer
               description: Burst capacity for rate limiting
               example: 1
+    TokenGenerationRequest:
+      type: object
+      required:
+      - user_address
+      properties:
+        user_address:
+          type: string
+          description: Ethereum address of the user
+          pattern: ^0x[a-fA-F0-9]{40}$
+          example: '0x1234567890abcdef1234567890abcdef12345678'
   securitySchemes:
     BearerAuth:
       type: http
