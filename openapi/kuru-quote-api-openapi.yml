@@ -104,19 +104,6 @@ paths:
       - Quote
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          description: Error code or type
-          example: invalid_json
-        message:
-          type: string
-          description: Human-readable error message
-          example: Invalid JSON format in request body
     CalculateBestPathResponse:
       type: object
       properties:
@@ -147,6 +134,19 @@ components:
         gasPrices:
           type: object
           description: Gas price information (swapcalc.GasPriceInfo)
+    ErrorResponse:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Error code or type
+          example: invalid_json
+        message:
+          type: string
+          description: Human-readable error message
+          example: Invalid JSON format in request body
     CalculateBestPathRequest:
       type: object
       required:
