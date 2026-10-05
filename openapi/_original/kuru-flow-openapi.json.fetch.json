@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.kuru.io/kuru-flow/openapi.json",
+ "requested_url": "https://docs.kuru.io/kuru-flow/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 13526,
+ "sha256": "49a80d7d6839274df462c4a0fb18c253bf4799caba816be209a48363a9ea1917",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
