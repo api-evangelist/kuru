@@ -104,36 +104,6 @@ paths:
       - Quote
 components:
   schemas:
-    CalculateBestPathResponse:
-      type: object
-      properties:
-        type:
-          type: string
-          description: Response type identifier
-          example: swap_calculation
-        status:
-          type: string
-          description: Status of the calculation
-          enum:
-          - success
-          - error
-          example: success
-        output:
-          type: string
-          description: Expected output amount
-          example: '950000000000000000'
-        message:
-          type: string
-          description: Status or error message
-        path:
-          type: object
-          description: Swap route information (tx_builder.SwapRoute)
-        buildResponse:
-          type: object
-          description: Transaction build response (tx_builder.BuildResponse)
-        gasPrices:
-          type: object
-          description: Gas price information (swapcalc.GasPriceInfo)
     ErrorResponse:
       type: object
       required:
@@ -215,6 +185,36 @@ components:
           minimum: 0
           maximum: 10000
           example: 25
+    CalculateBestPathResponse:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Response type identifier
+          example: swap_calculation
+        status:
+          type: string
+          description: Status of the calculation
+          enum:
+          - success
+          - error
+          example: success
+        output:
+          type: string
+          description: Expected output amount
+          example: '950000000000000000'
+        message:
+          type: string
+          description: Status or error message
+        path:
+          type: object
+          description: Swap route information (tx_builder.SwapRoute)
+        buildResponse:
+          type: object
+          description: Transaction build response (tx_builder.BuildResponse)
+        gasPrices:
+          type: object
+          description: Gas price information (swapcalc.GasPriceInfo)
   securitySchemes:
     BearerAuth:
       type: http
