@@ -125,3 +125,9 @@ components:
       in: header
       name: X-API-Key
       description: API key for authentication
+x-provenance:
+  method: harvested
+  publisher: Kuru
+  source: https://docs.kuru.io/kuru-flow/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
