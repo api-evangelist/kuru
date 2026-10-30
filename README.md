@@ -64,6 +64,120 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Kuru is a company surfaced as a portfolio company of electric-capital, paradigm and added to the API Evangelist network as a stub for enrichment. Sector: defi. This profile is a lead awaiting the enrichment pipeline.
+Kuru is a fully on-chain central limit order book (CLOB) decentralized exchange and smart routing aggregator built on Monad, operated by Kuru Labs. It combines an on-chain order book with AMM vault liquidity to deliver low-slippage, self-custody trading, and exposes the Kuru Flow API — a liquidity-aggregating routing engine that lets wallets, dApps and aggregators quote and build any-token-to-any-token swaps across every market on Monad, optionally appending their own referrer fee. Developers integrate through a TypeScript SDK, a Python CLOB SDK for market making, published and audited Solidity contracts, and a first-party agent skill for automated trading.
 
-Backed by: electric-capital, paradigm — https://www.kuru.io/
+**Areas:** Company · DeFi · Decentralized Exchange · Order Book · Trading · Blockchain · Monad · Liquidity · Swap · Web3
+
+## Kuru on APIs.io
+
+Everything profiled for Kuru is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/kuru/](https://apis.io/providers/kuru/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [Kuru Generate Token API](https://apis.io/apis/kuru/kuru-generate-token-api/) — The Generate Token API from Kuru — 1 operation(s) for generate token.
+- [Kuru Quote API](https://apis.io/apis/kuru/kuru-quote-api/) — The Quote API from Kuru — 1 operation(s) for quote.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [kuru](https://apis.io/servers/kuru/kuru/)
+
+#### Collections (2)
+
+Postman and Open Collection request collections.
+
+- [Kuru WebSocket Generate Token API](https://apis.io/collections/kuru/open-kuru-generate-token-api/)
+- [Kuru WebSocket Generate Token Quote API](https://apis.io/collections/kuru/open-kuru-quote-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Kuru Flow Overlay](https://apis.io/overlays/kuru/kuru-flow-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Kuru Authentication](https://apis.io/security/kuru/kuru-authentication/)
+- [Kuru Domain Security](https://apis.io/security/kuru/kuru-domain-security/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Kuru Rate Limits](https://apis.io/rate-limits/kuru/kuru-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.kuru.io/)
+- [Documentation](https://docs.kuru.io/)
+- [Getting started](https://docs.kuru.io/sdk/quickstart-sdk)
+- [API reference](https://docs.kuru.io/api-reference/generate-jwt-token)
+- [Pricing](https://docs.kuru.io/liquidity/how-fees-work)
+- [Sign up](https://www.kuru.io/)
+- [Blog](https://blog.kuru.io)
+- [Terms of service](https://docs.kuru.io/legal/tradingview)
+- [GitHub](https://github.com/Kuru-Labs)
+
+## API Evangelist rating
+
+**Kin Score 47.1** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 49.3 |
+| Contract governance | 18.2 |
+| Operational transparency | 23.7 |
+| Developer ergonomics | 81.0 |
+| Access clarity | 34.2 |
+
+**Agent readiness 30.5** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 19.4** — Securities & Market Data
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/kuru/](https://apis.io/providers/kuru/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Kuru: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/kuru/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
